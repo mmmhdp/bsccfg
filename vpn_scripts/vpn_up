@@ -1,0 +1,7 @@
+#https://community.openvpn.net/openvpn/wiki/OpenVPN3Linux?_gl=1*1djql6j*_gcl_au*MTY0OTk4OTY3Mi4xNzI2NzM5NDE0*_ga*MTE3NTAxOTg5MS4xNzI2NzM5NDE0*_ga_SPGM8Y8Y79*MTcyNjg0ODc1OS4zLjEuMTcyNjg0OTMzOS4wLjAuMA..*_fplc*WWVrRTdJUjNZZFpwJTJCTzk4M1RtTVFaOTBQdklHckxkeTU2RHk4RWh2RnFqWmVTR3RsV09RZUZ6QXR4NzJMRTBnd1BtaXhqM01RZm1CTk5MOE93NzU2ZHdTN2pKRndIOTk5bVhWNXE0M0pJVHhNN1JTMW5ESzZtN3VlNDNhRUElM0QlM0Q.
+#
+#
+#Needed only once on start up
+#openvpn3 config-import --persistent --config /home/mal/.config/openvpn3_conf/wooden-tool.conf
+
+openvpn3 session-start --config /home/mal/.config/openvpn3_conf/wooden-tool.conf

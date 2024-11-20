@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Function to manage OpenVPN session based on provided arguments
+manage_vpn() {
+    # Check if no arguments were passed
+    if [ $# -eq 0 ]; then
+        # No arguments, use default config path
+        openvpn3 session-manage --config /home/mal/.config/openvpn3_conf/wooden-tool.conf --disconnect
+    else
+        # Initialize variable to hold the custom path
+        config_path=""
+
+        # Parse the arguments
+        while getopts "o:" opt; do
+            case $opt in
+                o)
+                    # Store the path provided after -o
+                    config_path="$OPTARG"
+                    ;;
+                *)
+                    echo "Invalid arguments. Use -o some_path for disconnecting a specific session."
+                    return 1
+                    ;;
+            esac
+        done
+
+        # If a path is provided, use it for the command
+        if [ -n "$config_path" ]; then
+            openvpn3 session-manage --path "$config_path" --disconnect
+        else
+            echo "Invalid arguments. Use -o some_path for disconnecting a specific session."
+            return 1
+        fi
+    fi
+}
+
+# Call the function with the script's arguments
+manage_vpn "$@"
+
