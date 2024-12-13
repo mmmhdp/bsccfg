@@ -1033,3 +1033,4 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+vim.opt.guicursor = 'n-v-c-i:block'
