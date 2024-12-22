@@ -234,7 +234,10 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   { 'kyazdani42/nvim-web-devicons' },
-  { 'github/copilot.vim' },
+  {
+    'github/copilot.vim',
+    enabled = false, -- This disables the Copilot plugin
+  },
   {
     'nvim-tree/nvim-tree.lua',
     config = function()
@@ -1034,3 +1037,5 @@ vim.api.nvim_create_autocmd('FileType', {
 
 vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 vim.opt.guicursor = 'n-v-c-i:block'
+vim.api.nvim_set_keymap('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot enable<CR>', { noremap = true, silent = true })
