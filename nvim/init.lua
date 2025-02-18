@@ -1020,22 +1020,17 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'c',
+  pattern = { 'c', 'cpp' },
   callback = function()
+    vim.b.sleuth_automatic = false -- Prevent vim-sleuth from overriding settings
     vim.opt_local.shiftwidth = 2
     vim.opt_local.tabstop = 2
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'cpp',
-  callback = function()
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.tabstop = 2
+    vim.opt_local.expandtab = true -- Convert tabs to spaces
   end,
 })
 
 vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 vim.opt.guicursor = 'n-v-c-i:block'
+
 vim.api.nvim_set_keymap('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot enable<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot disable<CR>', { noremap = true, silent = true })
