@@ -1034,3 +1034,19 @@ vim.opt.guicursor = 'n-v-c-i:block'
 
 vim.api.nvim_set_keymap('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot disable<CR>', { noremap = true, silent = true })
+
+local diagnostics_active = true
+
+function ToggleDiagnosticsVirtualText()
+  diagnostics_active = not diagnostics_active
+  vim.diagnostic.config {
+    virtual_text = diagnostics_active,
+  }
+  if diagnostics_active then
+    print 'Diagnostics virtual text: ON'
+  else
+    print 'Diagnostics virtual text: OFF'
+  end
+end
+
+vim.api.nvim_set_keymap('n', '<leader>cvd', '<cmd>lua ToggleDiagnosticsVirtualText()<CR>', { noremap = true, silent = true })
