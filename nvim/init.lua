@@ -236,7 +236,7 @@ require('lazy').setup({
   { 'kyazdani42/nvim-web-devicons' },
   {
     'github/copilot.vim',
-    enabled = false, -- This disables the Copilot plugin
+    enabled = enable, -- This disables the Copilot plugin
   },
   {
     'nvim-tree/nvim-tree.lua',
@@ -1040,7 +1040,7 @@ vim.api.nvim_set_keymap('n', '<C-l>', ':NvimTreeToggle<CR>', { noremap = true, s
 vim.opt.guicursor = 'n-v-c-i:block'
 
 vim.api.nvim_set_keymap('n', '<leader>cd', ':Copilot disable<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot disable<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ce', ':Copilot enable<CR>', { noremap = true, silent = true })
 
 local diagnostics_active = true
 
