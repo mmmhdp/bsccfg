@@ -215,9 +215,9 @@ return {
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      require('mason-lspconfig').setup {
+      require('mason-lspconfig').setup({
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false, -- Automatically install LSPs that are not installed
+        automatic_enable= false, -- Automatically install LSPs that are not installed
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -228,7 +228,7 @@ return {
             require('lspconfig')[server_name].setup(server)
           end,
         },
-      }
+      })
     end,
   },
 
