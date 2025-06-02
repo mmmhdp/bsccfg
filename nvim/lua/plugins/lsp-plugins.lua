@@ -16,6 +16,7 @@ return {
   { 'Bilal2453/luvit-meta', lazy = true },
 
   {
+
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -170,7 +171,36 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = { 'clangd' },
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+          root_dir = require('lspconfig.util').root_pattern(
+            '.clangd',
+            '.clang-tidy',
+            '.clang-format',
+            'compile_commands.json',
+            'compile_flags.txt',
+            'configure.ac',
+            '.git'
+          ),
+          capabilities = {
+            textDocument = {
+              completion = {
+                editsNearCursor = true,
+              },
+            },
+            offsetEncoding = { 'utf-8', 'utf-16' },
+          },
+          on_attach = function(_, bufnr)
+            vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
+              require('lspconfig.server_configurations.clangd').commands.ClangdSwitchSourceHeader[1]()
+            end, { desc = 'Switch between source/header' })
+
+            vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdShowSymbolInfo', function()
+              require('lspconfig.server_configurations.clangd').commands.ClangdSymbolInfo[1]()
+            end, { desc = 'Show symbol info' })
+          end,
+        },
         -- gopls = {},
         pyright = {},
         -- rust_analyzer = {},
