@@ -20,11 +20,14 @@ return {
   -- example lazy.nvim install setup
   {
     'slugbyte/lackluster.nvim',
+    -- 'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
     init = function()
-      -- vim.cmd.colorscheme 'lackluster'
-      vim.cmd.colorscheme 'lackluster-hack' -- my favorite
+      vim.cmd.colorscheme 'lackluster'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-storm'
+      -- vim.cmd.colorscheme 'lackluster-hack' -- my favorite
       -- vim.cmd.colorscheme("lackluster-mint")
     end,
   },

@@ -12,7 +12,7 @@
 return {
   require('plugins.nvim-web-devicons'),
   require('plugins.copilot'),
-  require('plugins.nvim-tree'), 
+  require('plugins.nvim-tree'),
   require('plugins.vim-sleuth'),
   require('plugins.git-signs'),
   require('plugins.which-key'),
