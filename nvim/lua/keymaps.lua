@@ -179,5 +179,7 @@ function ToggleDiagnosticsVirtualText()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>cvd', '<cmd>lua ToggleDiagnosticsVirtualText()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>fg', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>cvd', '<cmd>lua ToggleDiagnosticsVirtualText()<CR>',
+  { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fg', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+  { noremap = true, silent = true })
