@@ -183,3 +183,33 @@ vim.api.nvim_set_keymap('n', '<leader>cvd', '<cmd>lua ToggleDiagnosticsVirtualTe
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>fg', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
   { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>to', ':terminal<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>tf', function()
+  -- Create a new, empty buffer
+  local buf    = vim.api.nvim_create_buf(false, true) -- [listed=false, scratch=true]
+
+  -- Define floating window dimensions
+  local width  = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+  local row    = math.floor((vim.o.lines - height) / 2)
+  local col    = math.floor((vim.o.columns - width) / 2)
+
+  -- Open floating window
+  vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  -- Start terminal inside the buffer
+  vim.fn.termopen(vim.o.shell)
+
+  -- Optional: start in insert mode
+  vim.cmd('startinsert')
+end, { noremap = true, silent = true, desc = "Open floating terminal" })
