@@ -8,7 +8,7 @@ return {
     fold = {
       enable = true
     },
-    ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+    ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'gitcommit' },
     -- Autoinstall languages that are not installed
     auto_install = true,
     highlight = {

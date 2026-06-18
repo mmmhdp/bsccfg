@@ -175,7 +175,20 @@ return {
         },
 
         clangd = {
-          cmd = { 'clangd' },
+          cmd = {
+            'clangd',
+            'fallback-stule=Google',
+            '--background-index',         -- Enables background indexing
+            '--clang-tidy',               -- Enables clang-tidy diagnostics
+            '--completion-style=bundled', -- Simpler completions for faster performance
+            '--rename-file-limit=0',      -- No limit on renaming files
+            '--header-insertion=iwyu',    -- Suggest missing includes based on IWYU
+            '--inlay-hints',              -- Enable inlay hints for parameter and type information
+            '--limit-results=70',         -- Limit autocompletion and symbol results
+            '--suggest-missing-includes', -- Still show missing includes suggestions
+            '--pch-storage=disk',         -- Stores precompiled headers on disk (fixes the issue where system ran out of memory when indexing large projects, not a huge performance hit on fast m2 ssds)
+            '--log=error',                -- Log only errors
+          },
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
           root_dir = require('lspconfig.util').root_pattern(
             '.clangd',
@@ -204,8 +217,9 @@ return {
             end, { desc = 'Show symbol info' })
           end,
         },
+        pylsp = {},
+        -- pyright = {},
         -- gopls = {},
-        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
