@@ -127,7 +127,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-vim.wo.relativenumber = true
+vim.wo.relativenumber = false
 
 vim.keymap.set({ '', '!' }, '<Right>', '', {})
 vim.keymap.set({ '', '!' }, '<Left>', '', {})
@@ -213,3 +213,12 @@ vim.keymap.set('n', '<leader>tf', function()
   -- Optional: start in insert mode
   vim.cmd('startinsert')
 end, { noremap = true, silent = true, desc = "Open floating terminal" })
+
+
+vim.keymap.set("n", "<leader>ih", function()
+  local filter = { bufnr = 0 }
+  vim.lsp.inlay_hint.enable(
+    not vim.lsp.inlay_hint.is_enabled(filter),
+    filter
+  )
+end, { desc = "Toggle inlay hints" })

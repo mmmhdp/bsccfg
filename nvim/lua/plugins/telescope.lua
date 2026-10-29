@@ -9,7 +9,7 @@ return {
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    tag = '0.1.8',
+    branch = "master", -- CHANGE THIS from "0.1.x" to "master"
     dependencies = {
       'nvim-lua/plenary.nvim',
       {

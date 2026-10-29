@@ -177,7 +177,7 @@ return {
         clangd = {
           cmd = {
             'clangd',
-            'fallback-stule=Google',
+            'fallback-stule=Mozilla',
             '--background-index',         -- Enables background indexing
             '--clang-tidy',               -- Enables clang-tidy diagnostics
             '--completion-style=bundled', -- Simpler completions for faster performance
@@ -207,7 +207,9 @@ return {
             },
             offsetEncoding = { 'utf-8', 'utf-16' },
           },
-          on_attach = function(_, bufnr)
+          on_attach = function(client, bufnr)
+            require('nvim-navic').attach(client, bufnr)
+
             vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
               require('lspconfig.server_configurations.clangd').commands.ClangdSwitchSourceHeader[1]()
             end, { desc = 'Switch between source/header' })
@@ -217,8 +219,7 @@ return {
             end, { desc = 'Show symbol info' })
           end,
         },
-        pylsp = {},
-        -- pyright = {},
+        pyright = {},
         -- gopls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -260,6 +261,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+	'clang-format',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -296,30 +298,45 @@ return {
     },
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
-        end
-        return {
-          timeout_ms = 500,
-          lsp_format = lsp_format_opt,
-        }
-      end,
+      format_on_save = false,  -- Disable auto-formatting on save
+      --format_on_save = function(bufnr)
+      --  -- Disable "format_on_save lsp_fallback" for languages that don't
+      --  -- have a well standardized coding style. You can add additional
+      --  -- languages here or re-enable it for the disabled ones.
+      --  local disable_filetypes = { c = true, cpp = true, python = true }
+      --  local lsp_format_opt
+      --  if disable_filetypes[vim.bo[bufnr].filetype] then
+      --    lsp_format_opt = 'never'
+      --  else
+      --    lsp_format_opt = 'fallback'
+      --  end
+      --  return {
+      --    timeout_ms = 500,
+      --    lsp_format = lsp_format_opt,
+      --  }
+      --end,
       formatters_by_ft = {
         -- lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "isort", "black" },
+        cmake = { "cmake_format" },
+        json = { "clang_format" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
+
+	formatters = {
+	     cmake_format = {
+	       args = {
+	         '--line-width', '20',
+	         '--tab-size', '2',
+	         '--use-tabchars', 'False',
+	         '$FILENAME',
+	       },
+	     },
+	   },
+
     },
   },
 

@@ -1,0 +1,120 @@
+return {
+--  'mfussenegger/nvim-dap',
+--  dependencies = {
+--    'rcarriga/nvim-dap-ui',
+--    'nvim-neotest/nvim-nio',
+--    'williamboman/mason.nvim',
+--    'jay-babu/mason-nvim-dap.nvim',
+--    'mfussenegger/nvim-dap-python',
+--  },
+--  keys = function(_, keys)
+--    local dap = require 'dap'
+--    local dapui = require 'dapui'
+--    return {
+--      { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
+--      { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
+--      { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
+--      { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
+--      { '<leader>b', dap.toggle_breakpoint, desc = 'Debug: Toggle Breakpoint' },
+--      {
+--        '<leader>B',
+--        function()
+--          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+--        end,
+--        desc = 'Debug: Set Breakpoint',
+--      },
+--      { '<F7>', dapui.toggle, desc = 'Debug: See last session result.' },
+--      unpack(keys),
+--    }
+--  end,
+--  config = function()
+--    local dap = require 'dap'
+--    local dapui = require 'dapui'
+--
+--    -- Setup mason-nvim-dap FIRST, before using the adapters
+--    -- Remove ensure_installed to avoid race conditions
+--    require('mason-nvim-dap').setup {
+--      automatic_installation = true,
+--      -- Don't specify ensure_installed here - let it be automatic
+--      -- Or if you want to ensure it, use a handler
+--    }
+--
+--    -- Wait a bit for Mason to finish installing (optional but safer)
+--    -- Check if codelldb exists, if not, don't configure yet
+--    local codelldb_path = vim.fn.stdpath 'data' .. '/mason/bin/codelldb'
+--    
+--    -- Only configure adapters if codelldb exists
+--    if vim.fn.filereadable(codelldb_path) == 1 then
+--      -- Define the lldb adapter
+--      dap.adapters.lldb = {
+--        type = 'executable',
+--        command = codelldb_path,
+--        name = 'lldb',
+--      }
+--
+--      -- Also define codelldb as server adapter
+--      dap.adapters.codelldb = {
+--        type = 'server',
+--        port = '${port}',
+--        executable = {
+--          command = codelldb_path,
+--          args = { '--port', '${port}' },
+--        },
+--      }
+--
+--      -- Configure C++ debugging
+--      dap.configurations.cpp = {
+--        {
+--          name = 'Launch',
+--          type = 'lldb',
+--          request = 'launch',
+--          program = function()
+--            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--          end,
+--          cwd = '${workspaceFolder}',
+--          stopOnEntry = false,
+--          args = {},
+--          runInTerminal = true,
+--        },
+--      }
+--
+--      -- Same config for C
+--      dap.configurations.c = dap.configurations.cpp
+--    else
+--      -- If codelldb isn't installed yet, set up a notification and retry later
+--      vim.defer_fn(function()
+--        local new_path = vim.fn.stdpath 'data' .. '/mason/bin/codelldb'
+--        if vim.fn.filereadable(new_path) == 1 then
+--          vim.notify('codelldb installed! Restart Neovim to use C/C++ debugging', vim.log.levels.INFO)
+--        end
+--      end, 5000)
+--    end
+--
+--    -- DAP UI setup
+--    dapui.setup {
+--      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+--      controls = {
+--        icons = {
+--          pause = '⏸',
+--          play = '▶',
+--          step_into = '⏎',
+--          step_over = '⏭',
+--          step_out = '⏮',
+--          step_back = 'b',
+--          run_last = '▶▶',
+--          terminate = '⏹',
+--          disconnect = '⏏',
+--        },
+--      },
+--    }
+--
+--    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+--    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+--    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+--
+--    -- Python debugger setup
+--    local dap_python = require 'dap-python'
+--    dap_python.setup()
+--    dap_python.test_runner = 'pytest'
+--  end,
+}
